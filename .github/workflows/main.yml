@@ -32,13 +32,13 @@ jobs:
 
     - name: Deploy application to cluster
       run: |
-        kubectl run webgoat --image=webgoat/webgoat-7.1
+        kubectl create namespace webgoat
+        kubectl run --generator=run-pod/v1 webgoat --image=webgoat/webgoat-7.1 -n webgoat
 
     - name: Scan Cluster
       uses: alcideio/advisor-action@v1.1.0   
       with:
-        exclude_namespaces: '-'
-        include_namespaces: '*'
+        include_namespaces: 'webgoat'
         output_file: 'advisor-scan.html'
 
     - name: Upload Alcide Advisor Scan Report
