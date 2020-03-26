@@ -32,7 +32,7 @@ jobs:
         install_local_path_provisioner: true
 
     - name: Deploy application to cluster
-      uses: steebchen/kubectl@master
+      uses: steebchen/kubectl@1.0.1
       with:
         args: run webgoat --image=webgoat/webgoat-7.1
 
