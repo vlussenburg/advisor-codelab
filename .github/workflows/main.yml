@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Launch Cluster
-    - uses: engineerd/setup-kind@v0.3.0
+      uses: engineerd/setup-kind@v0.3.0
 
     - name: Test cluster
       run: |
