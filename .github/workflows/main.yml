@@ -34,7 +34,7 @@ jobs:
     - name: Deploy application to cluster
       uses: steebchen/kubectl@master
       with:
-        args: run webgoat image=webgoat/webgoat-7.1
+        args: run webgoat --image=webgoat/webgoat-7.1
 
     - name: Scan Cluster
       uses: alcideio/advisor-action@v1.1.0   
