@@ -22,25 +22,30 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
 
+    # Launches a KinD cluster to deploy our application under test to
     - name: Launch Cluster
       uses: engineerd/setup-kind@v0.3.0
-
+    
+    # Basic check that the cluster is up and running
     - name: Test cluster
       run: |
         kubectl cluster-info
         kubectl get pods -n kube-system
 
+    # Deploy the application we want to scan to the cluster in a separate, new namespace
     - name: Deploy application to cluster
       run: |
         kubectl create namespace webgoat
         kubectl run --generator=run-pod/v1 webgoat --image=webgoat/webgoat-7.1 -n webgoat
 
+    # Kick off the scan with Alcide Advisor
     - name: Scan Cluster
       uses: alcideio/advisor-action@v1.1.0   
       with:
         include_namespaces: 'webgoat'
         output_file: 'advisor-scan.html'
 
+    # Upload the report to GitHub Action Artifacts
     - name: Upload Alcide Advisor Scan Report
       uses: actions/upload-artifact@v1
       with:
